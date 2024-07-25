@@ -1,8 +1,15 @@
+import clsx from "clsx";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navigation from "../components/layout/Navigation";
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={clsx(roboto.className, 'min-h-screen')}>
+          <Navigation />
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            {children}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
